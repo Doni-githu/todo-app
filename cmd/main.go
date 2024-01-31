@@ -2,7 +2,10 @@ package main
 
 import (
 	"github.com/Doni-githu/todo-app/pkg/common/db"
+	"github.com/Doni-githu/todo-app/pkg/common/middlewares"
 	person "github.com/Doni-githu/todo-app/pkg/person/handlers"
+	"github.com/Doni-githu/todo-app/pkg/person/repository"
+	"github.com/Doni-githu/todo-app/pkg/person/services"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 )
@@ -16,10 +19,11 @@ func main() {
 
 	gin.SetMode("debug")
 	r := gin.Default()
-	r.ForwardedByClientIP = true
-	r.SetTrustedProxies([]string{"127.0.0.1"})
-	h := db.Init(dbUrl)
-	person.RegisterRoutes(r, h)
+	r.Use(middlewares.CORSMiddleware())
+	db := db.Init(dbUrl)
+	repo := repository.NewRepository(db)
+	s := services.NewService(repo)
+	person.RegisterRoutes(r, s)
 
 	r.Run(port)
 }

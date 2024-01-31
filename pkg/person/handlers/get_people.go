@@ -2,18 +2,25 @@ package person
 
 import (
 	"net/http"
+	"strconv"
 
-	"github.com/Doni-githu/todo-app/pkg/common/models"
 	"github.com/gin-gonic/gin"
 )
 
 func (h *handler) GetPeople(ctx *gin.Context) {
-	var people []models.Person
-
-	if result := h.db.Find(&people).Limit(10); result.Error != nil {
-		ctx.AbortWithError(http.StatusNotFound, result.Error)
-		return
+	page, err3:= strconv.Atoi(ctx.Query("page"))
+	limit, err2:= strconv.Atoi(ctx.Query("limit"))
+	if err3 != nil {
+		page = 0
+	}
+	if err2 != nil {
+		limit = 10
 	}
 
+	people, err := h.s.PersonService.GetPeople(page, limit)
+	if err != nil {
+		ctx.AbortWithError(http.StatusNotFound, err)
+		return
+	}
 	ctx.JSON(http.StatusOK, people)
 }

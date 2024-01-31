@@ -1,17 +1,17 @@
 package person
 
 import (
+	"github.com/Doni-githu/todo-app/pkg/person/services"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 type handler struct {
-	db *gorm.DB
+	s *services.Service
 }
 
-func RegisterRoutes(r *gin.Engine, db *gorm.DB) {
+func RegisterRoutes(r *gin.Engine, services *services.Service) {
 	h := &handler{
-		db: db,
+		s: services,
 	}
 
 	routes := r.Group("/people")
