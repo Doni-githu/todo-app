@@ -28,11 +28,11 @@ func (s *PersonService) AddPerson(body models.AddPerson) (models.Person, error) 
 	age, _ := s.external.GetAge(body.Name)
 	gender, _ := s.external.GetGender(body.Name)
 	person := models.AddPerson{
-		Name: body.Name,
-		Surname: body.Surname,
-		Patronymic: body.Patronymic,
-		Age: age,
-		Gender: gender,
+		Name:        body.Name,
+		Surname:     body.Surname,
+		Patronymic:  body.Patronymic,
+		Age:         age,
+		Gender:      gender,
 		Nationality: nat,
 	}
 	return s.repo.AddPerson(person)
@@ -46,7 +46,6 @@ func (s *PersonService) DeletePerson(userId int) (string, error) {
 	return s.repo.DeletePerson(userId)
 }
 
-
-func (s *PersonService) GetPersonWithNameAndSurnameAndPatronymic(name, surname, patronymic string) *models.Person {
+func (s *PersonService) GetPersonWithNameAndSurnameAndPatronymic(name, surname, patronymic string) (models.Person, error) {
 	return s.repo.GetPersonWithNameAndSurnameAndPatronymic(name, surname, patronymic)
 }

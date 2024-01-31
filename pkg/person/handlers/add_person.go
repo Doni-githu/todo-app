@@ -14,8 +14,8 @@ func (h *handler) AddPerson(ctx *gin.Context) {
 		ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
-	sameOne := h.s.PersonService.GetPersonWithNameAndSurnameAndPatronymic(*body.Name, *body.Surname, *body.Patronymic)
-	if sameOne != nil {
+	sameOne, err := h.s.PersonService.GetPersonWithNameAndSurnameAndPatronymic(*body.Name, *body.Surname, *body.Patronymic)
+	if err == nil {
 		ctx.JSON(http.StatusCreated, sameOne)
 		return
 	}

@@ -95,8 +95,8 @@ func (r *PersonPostgres) DeletePerson(userId int) (string, error) {
 	return "Delete Person Successfyly", nil
 }
 
-func (r *PersonPostgres) GetPersonWithNameAndSurnameAndPatronymic(name, surname, patronymic string) *models.Person {
-	person :=nil
-	r.db.Where(&models.Person{Name: name, Surname: surname, Patronymic: patronymic}).First(&person)
-	return &person
+func (r *PersonPostgres) GetPersonWithNameAndSurnameAndPatronymic(name, surname, patronymic string) (models.Person, error) {
+	person := models.Person{}
+	result := r.db.Where(&models.Person{Name: name, Surname: surname, Patronymic: patronymic}).First(&person)
+	return person, result.Error
 }

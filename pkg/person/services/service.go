@@ -18,7 +18,7 @@ type PersonServices interface {
 	AddPerson(user models.AddPerson) (models.Person, error)
 	UpdatePerson(body todo.UpdateInput, userId int) (models.Person, error)
 	DeletePerson(userId int) (string, error)
-	GetPersonWithNameAndSurnameAndPatronymic(name, surname, patronymic string) *models.Person
+	GetPersonWithNameAndSurnameAndPatronymic(name, surname, patronymic string) (models.Person, error)
 }
 
 type Service struct {

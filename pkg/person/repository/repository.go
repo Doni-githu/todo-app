@@ -13,7 +13,7 @@ type Person interface {
 	AddPerson(user models.AddPerson) (models.Person, error)
 	UpdatePerson(userId int, input todo.UpdateInput) (models.Person, error)
 	DeletePerson(userId int) (string, error)
-	GetPersonWithNameAndSurnameAndPatronymic(name, surname, patronymic string) *models.Person
+	GetPersonWithNameAndSurnameAndPatronymic(name, surname, patronymic string) (models.Person, error)
 }
 
 
