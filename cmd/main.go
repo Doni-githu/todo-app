@@ -25,5 +25,5 @@ func main() {
 	person.RegisterRoutes(r, s)
 	r.Use(middlewares.CORSMiddleware())
 	
-	r.Run(port)
+	r.Run(":" +port)
 }

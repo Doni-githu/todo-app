@@ -10,7 +10,7 @@ type AddPersonRequestBody struct {
 
 func (i AddPersonRequestBody) Validate() error {
 
-	if i.Name == nil || i.Surname == nil || i.Patronymic == nil {
+	if i.Name == nil || i.Surname == nil {
 		return errors.New("add structure has no values")
 	}
 
@@ -46,4 +46,13 @@ type UpdateInput struct {
 	Age         *int    `json:"age,omitempty"`
 	Gender      *string `json:"gender,omitempty"`
 	Nationality *string `json:"nationality,omitempty"`	
+}
+
+
+func (i *UpdateInput) Validate() error {
+	if i.Name == nil || i.Surname == nil {
+		return errors.New("add structure has no values")
+	}
+
+	return nil
 }
