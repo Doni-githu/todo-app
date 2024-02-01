@@ -19,11 +19,11 @@ func main() {
 
 	gin.SetMode("debug")
 	r := gin.Default()
-	r.Use(middlewares.CORSMiddleware())
 	db := db.Init(dbUrl)
 	repo := repository.NewRepository(db)
 	s := services.NewService(repo)
 	person.RegisterRoutes(r, s)
-
+	r.Use(middlewares.CORSMiddleware())
+	
 	r.Run(port)
 }
