@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"github.com/Doni-githu/todo-app/pkg/common/db"
 	"github.com/Doni-githu/todo-app/pkg/common/middlewares"
 	person "github.com/Doni-githu/todo-app/pkg/person/handlers"
@@ -11,15 +13,19 @@ import (
 )
 
 func main() {
-	viper.SetConfigFile("./pkg/common/envs/.env")
+	viper.SetConfigFile(".env")
 	viper.ReadInConfig()
 
 	port := viper.Get("PORT").(string)
-	dbUrl := viper.Get("DB_URL").(string)
+	dbUrl := viper.Get("DB_LOCAL_URL").(string)
 
 	gin.SetMode("debug")
 	r := gin.Default()
-	db := db.Init(dbUrl)
+	db, err := db.Init(dbUrl)
+	if err != nil {
+		log.Fatalf(err.Error())
+		return 
+	}
 	repo := repository.NewRepository(db)
 	s := services.NewService(repo)
 	person.RegisterRoutes(r, s)
